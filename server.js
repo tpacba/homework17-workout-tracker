@@ -35,11 +35,12 @@ app.get("/exercise", function (req, res) {
     res.sendFile(path.join(__dirname, "./public/exercise.html"));
 });
 
-
+// API routes
 // GET route from getLastWorkout function
 app.get("/api/workouts", (req, res) => {
-    db.Workout.find({})
+    db.Workout.find().sort({day: -1}).limit(1)
         .then((dbWorkout) => {
+            console.log(`getLastWorkout: ${dbWorkout}`);
             res.json(dbWorkout);
         })
         .catch((err) => {
@@ -49,8 +50,9 @@ app.get("/api/workouts", (req, res) => {
 
 // PUT route from addExercise function
 app.put("/api/workouts/:id", (req, res) => {
-    db.Workout.findByIdAndUpdate(req.params.id, { exercises: [req.body] })
+    db.Workout.findByIdAndUpdate(req.params.id, { exercises: req.body })
         .then((dbWorkout) => {
+            console.log(`addExercise: ${dbWorkout}`);
             res.json(dbWorkout);
         })
         .catch((err) => {
@@ -58,6 +60,17 @@ app.put("/api/workouts/:id", (req, res) => {
         });
 });
 
+// POST route for createWorkout function
+app.post("/api/workouts", (req, res) => {
+    db.Workout.create(req.body)
+        .then((dbWorkout) => {
+            console.log(`createWorkout: ${dbWorkout}`);
+            res.json(dbWorkout);
+        })
+        .catch((err) => {
+            res.json(err);
+        });
+});
 
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}!`);

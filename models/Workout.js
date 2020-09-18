@@ -4,8 +4,14 @@ const Schema = mongoose.Schema;
 
 const WorkoutSchema = new Schema({
 
-    // Code schema properties here
+    day: {
+        type: Date,
+        default: Date.now
+    },
 
+    exercises: {
+        type: Array
+    }
 });
 
 // Code schema methods here
