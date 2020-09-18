@@ -22,9 +22,18 @@ mongoose.connect(
     { useNewUrlParser: true }
 );
 
-app.get("/stats", (req, res) => {
+// HTML routes
+app.get("/", function (req, res) {
+    res.sendFile(path.join(__dirname, "./public/index.html"));
+});
 
-})
+app.get("/stats", function (req, res) {
+    res.sendFile(path.join(__dirname, "./public/stats.html"));
+});
+
+app.get("/exercise", function (req, res) {
+    res.sendFile(path.join(__dirname, "./public/exercise.html"));
+});
 
 
 // GET route from getLastWorkout function
@@ -40,7 +49,7 @@ app.get("/api/workouts", (req, res) => {
 
 // PUT route from addExercise function
 app.put("/api/workouts/:id", (req, res) => {
-    db.Workout.findByIdAndUpdate(req.params.id,{ exercises: [req.body]})
+    db.Workout.findByIdAndUpdate(req.params.id, { exercises: [req.body] })
         .then((dbWorkout) => {
             res.json(dbWorkout);
         })
