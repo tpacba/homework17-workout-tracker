@@ -2,6 +2,8 @@ const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 
+var path = require("path");
+
 const PORT = process.env.PORT || 3001;
 
 const db = require("./models");
@@ -20,9 +22,25 @@ mongoose.connect(
     { useNewUrlParser: true }
 );
 
-// Code routes here
+app.get("/stats", (req, res) => {
+
+})
+
+
+// GET route from getLastWorkout function
 app.get("/api/workouts", (req, res) => {
     db.Workout.find({})
+        .then((dbWorkout) => {
+            res.json(dbWorkout);
+        })
+        .catch((err) => {
+            res.json(err);
+        });
+});
+
+// PUT route from addExercise function
+app.put("/api/workouts/:id", (req, res) => {
+    db.Workout.findByIdAndUpdate(req.params.id,{ exercises: [req.body]})
         .then((dbWorkout) => {
             res.json(dbWorkout);
         })
