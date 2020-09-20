@@ -27,7 +27,7 @@ Run `npm install` to install the following dependencies:
 
 ## Usage
 
-The app is deployed with [Heroku]().
+The app is deployed with [Heroku](https://pacific-anchorage-84827.herokuapp.com/).
 
 Run `npm start` or `node server.js` to start the app in local host 
 
