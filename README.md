@@ -29,9 +29,9 @@ Run `npm install` to install the following dependencies:
 
 The app is deployed with [Heroku]().
 
-Run `npm start` or `node server.js` to start the app.
+Run `npm start` or `node server.js` to start the app in local host 
 
-Optional: Run `node ./seeders.js` to begin with some seed data.
+(Optional: Run `node ./seeders.js` to begin with some seed data.)
 
 ## Contributing
 
