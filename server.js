@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 mongoose.connect(
-    process.env.MONGODB_URI || "mongodb://localhost/custommethods",
+    process.env.MONGODB_URI || "mongodb://localhost/workout",
     { useNewUrlParser: true }
 );
 
@@ -50,7 +50,14 @@ app.get("/api/workouts", (req, res) => {
 
 // PUT route from addExercise function
 app.put("/api/workouts/:id", (req, res) => {
-    db.Workout.findByIdAndUpdate(req.params.id, { exercises: req.body })
+    db.Workout.findByIdAndUpdate(
+        req.params.id, 
+        { $push: 
+            {
+                exercises: req.body
+            } 
+        }
+    )
         .then((dbWorkout) => {
             console.log(`addExercise: ${dbWorkout}`);
             res.json(dbWorkout);
@@ -71,6 +78,18 @@ app.post("/api/workouts", (req, res) => {
             res.json(err);
         });
 });
+
+// GET route for getWorkoutsInRange
+app.get("/api/workouts/range", (req, res) => {
+    db.Workout.find({})
+        .then((dbWorkout) => {
+            console.log(`getWorkoutsInRange: ${dbWorkout}`);
+            res.json(dbWorkout);
+        })
+        .catch((err) => {
+            res.json(err);
+        });
+})
 
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}!`);
